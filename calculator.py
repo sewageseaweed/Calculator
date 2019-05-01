@@ -5,13 +5,18 @@ root = Tk()
 root.title("Calculator")
 root.geometry("500x700")
 
-values = []
+
+def turn_to_float(values=[]):
+    entry.delete(0, END)
+    float_list = [float(i) for i in values]
+    for i in float_list:
+        print(i)
 
 
-def show_numbers(num):
+def addition(num):
+    values = []
     values.append(num)
-    for i in values:
-        total.configure(text=values)
+    turn_to_float(values)
 
 
 #total = Label(root, width=10, height=8, bg="red")
@@ -42,9 +47,9 @@ button0 = Button(text="0", width=5, height=8, command=lambda: entry.insert(END,0
 
 button_dot = Button(text=".", width = 5, height=8, command=lambda: entry.insert(END, '.'))
 
-button_plus = Button(text="+", width=5, height=8, command=lambda: printName())
+button_plus = Button(text="+", width=5, height=8, command=lambda: addition(entry.get()))
 
-button_minus = Button(text="-", width=5, height=8)
+button_minus = Button(text="-", width=5, height=8, command=lambda: turn_to_float())
 
 
 button1.grid(row=1, column=0, sticky="sew", pady=1)
