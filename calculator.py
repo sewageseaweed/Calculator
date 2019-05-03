@@ -7,6 +7,8 @@ root.geometry("500x700")
 
 values = []
 
+entry = Entry(root, width=10)
+entry.config(font=("Courier", 18))
 
 def clear():
     entry.delete(0, END)
@@ -41,11 +43,11 @@ def store_to_total():
     num = entry.get()
     values.append(num)
     entry.delete(0, END)
-    total = 0
+    global total
     try:
         total = float(values[0])
     except ValueError:
-        pass
+        total = 0
     length = len(values)
     for i in xrange(1, length, 2):
         if values[i] == '+':
@@ -56,8 +58,8 @@ def store_to_total():
             total *= float(values[i+1])
         if values[i] == '/':
             total /= float(values[i+1])
-
     entry.insert(END, total)
+    del values[:]
 
 #def store_to_total(values=[]):
     #entry.delete(0, END)
@@ -73,8 +75,6 @@ def store_to_total():
 #total = Label(root, width=10, height=8, bg="red")
 #total.config(font=("Courier", 18))
 
-entry = Entry(root, width=10)
-entry.config(font=("Courier", 18))
 
 #Creating buttons in GUI
 
