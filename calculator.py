@@ -8,6 +8,11 @@ root.geometry("500x700")
 values = []
 
 
+def clear():
+    entry.delete(0, END)
+    del values[:]
+
+
 def sum(num):
     values.append(num)
     values.append('+')
@@ -48,7 +53,7 @@ def store_to_total():
         if values[i] == '/':
             total /= float(values[i+1])
 
-    print(total)
+    entry.insert(END, total)
 
 #def store_to_total(values=[]):
     #entry.delete(0, END)
@@ -101,7 +106,7 @@ button_multiplication = Button(text='X', width=3, height=4, command=lambda: mult
 
 button_equals = Button(text="=", width=3, height=4, command=lambda: store_to_total())
 
-button_clear_entry = Button(text="Clear", width=3, height=4, command=lambda: entry.delete(0, END))
+button_clear_entry = Button(text="Clear All", width=3, height=4, command=lambda: clear())
 
 #Formatting Button Layout in APP
 
