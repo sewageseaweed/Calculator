@@ -5,18 +5,38 @@ root = Tk()
 root.title("Calculator")
 root.geometry("500x700")
 
+values = []
 
-def turn_to_float(values=[]):
+
+def sum(num):
+    values.append(num)
+    values.append('+')
     entry.delete(0, END)
-    float_list = [float(i) for i in values]
-    for i in float_list:
-        print(i)
+
+
+def turn_to_float():
+    entry.delete(0, END)
+    total = values[0]
+    length = len(values)
+    print(length)
+    for i in xrange(1, length, 2):
+        print(values[i])
+
+#def turn_to_float(values=[]):
+    #entry.delete(0, END)
+    #for i in enumerate(values):
+    #    if not i.isalpha():
+    #        values = map(str, values)
+    #    else:
+    #        values = map(float, values)
+        #print(i)
 
 
 def store(num):
-    values = []
     values.append(num)
     turn_to_float(values)
+    for i in values:
+        print(i)
 
 
 #total = Label(root, width=10, height=8, bg="red")
@@ -24,6 +44,8 @@ def store(num):
 
 entry = Entry(root, width=10)
 entry.config(font=("Courier", 18))
+
+#Creating buttons in GUI
 
 button1 = Button(text="1", width=3, height=4, command=lambda: entry.insert(END,1))
 
@@ -47,7 +69,7 @@ button0 = Button(text="0", width=3, height=4, command=lambda: entry.insert(END,0
 
 button_dot = Button(text=".", width = 3, height=4, command=lambda: entry.insert(END, '.'))
 
-button_plus = Button(text="+", width=3, height=4, command=lambda: store(entry.get()))
+button_plus = Button(text="+", width=3, height=4, command=lambda: sum(entry.get()))
 
 button_minus = Button(text="-", width=3, height=4, command=lambda: store(entry.get()))
 
@@ -59,6 +81,7 @@ button_equals = Button(text="=", width=3, height=4, command=lambda: turn_to_floa
 
 button_clear_entry = Button(text="Clear", width=3, height=4, command=lambda: entry.delete(0, END))
 
+#Formatting Button Layout in APP
 
 entry.grid(row=0, stick="nsew", columnspan=6)
 
@@ -81,6 +104,8 @@ button_plus.grid(row=4, column=3, sticky="nsew", pady=1)
 button_equals.grid(row=5, column=3, sticky="nsew", pady=1)
 
 #total.grid(row=0, stick="ew", columnspan=3)
+
+#Giving a set size for each row/column
 
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
