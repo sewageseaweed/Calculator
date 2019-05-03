@@ -14,15 +14,43 @@ def sum(num):
     entry.delete(0, END)
 
 
-def turn_to_float():
+def subtract(num):
+    values.append(num)
+    values.append('-')
     entry.delete(0, END)
-    total = values[0]
-    length = len(values)
-    print(length)
-    for i in xrange(1, length, 2):
-        print(values[i])
 
-#def turn_to_float(values=[]):
+
+def multiply(num):
+    values.append(num)
+    values.append('x')
+    entry.delete(0, END)
+
+
+def divide(num):
+    values.append(num)
+    values.append('/')
+    entry.delete(0, END)
+
+
+def store_to_total():
+    num = entry.get()
+    values.append(num)
+    entry.delete(0, END)
+    total = float(values[0])
+    length = len(values)
+    for i in xrange(1, length, 2):
+        if values[i] == '+':
+            total += float(values[i+1])
+        if values[i] == '-':
+            total -= float(values[i+1])
+        if values[i] == 'x':
+            total *= float(values[i+1])
+        if values[i] == '/':
+            total /= float(values[i+1])
+
+    print(total)
+
+#def store_to_total(values=[]):
     #entry.delete(0, END)
     #for i in enumerate(values):
     #    if not i.isalpha():
@@ -31,12 +59,6 @@ def turn_to_float():
     #        values = map(float, values)
         #print(i)
 
-
-def store(num):
-    values.append(num)
-    turn_to_float(values)
-    for i in values:
-        print(i)
 
 
 #total = Label(root, width=10, height=8, bg="red")
@@ -71,13 +93,13 @@ button_dot = Button(text=".", width = 3, height=4, command=lambda: entry.insert(
 
 button_plus = Button(text="+", width=3, height=4, command=lambda: sum(entry.get()))
 
-button_minus = Button(text="-", width=3, height=4, command=lambda: store(entry.get()))
+button_minus = Button(text="-", width=3, height=4, command=lambda: subtract(entry.get()))
 
-button_divide = Button(text='/', width=3, height=4, command=lambda: store(entry.get()))
+button_divide = Button(text='/', width=3, height=4, command=lambda: divide(entry.get()))
 
-button_multiplication = Button(text='X', width=3, height=4, command=lambda: store(entry.get()))
+button_multiplication = Button(text='X', width=3, height=4, command=lambda: multiply(entry.get()))
 
-button_equals = Button(text="=", width=3, height=4, command=lambda: turn_to_float())
+button_equals = Button(text="=", width=3, height=4, command=lambda: store_to_total())
 
 button_clear_entry = Button(text="Clear", width=3, height=4, command=lambda: entry.delete(0, END))
 
