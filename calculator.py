@@ -41,7 +41,11 @@ def store_to_total():
     num = entry.get()
     values.append(num)
     entry.delete(0, END)
-    total = float(values[0])
+    total = 0
+    try:
+        total = float(values[0])
+    except ValueError:
+        pass
     length = len(values)
     for i in xrange(1, length, 2):
         if values[i] == '+':
