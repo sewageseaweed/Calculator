@@ -1,6 +1,5 @@
 from Tkinter import *
 
-
 root = Tk()
 root.title("Calculator")
 root.geometry("500x700")
@@ -10,32 +9,14 @@ values = []
 entry = Entry(root, width=10)
 entry.config(font=("Courier", 18))
 
+
 def clear():
     entry.delete(0, END)
     del values[:]
 
 
-def sum(num):
-    values.append(num)
-    values.append('+')
-    entry.delete(0, END)
-
-
-def subtract(num):
-    values.append(num)
-    values.append('-')
-    entry.delete(0, END)
-
-
-def multiply(num):
-    values.append(num)
-    values.append('x')
-    entry.delete(0, END)
-
-
-def divide(num):
-    values.append(num)
-    values.append('/')
+def operator(num, op):
+    values.extend((num, op))
     entry.delete(0, END)
 
 
@@ -51,40 +32,27 @@ def store_to_total():
         total = 0
     length = len(values)
 
-
-    for i in xrange(1, length, 2):
-        if values[i] == '+':
-            total += float(values[i+1])
-        if values[i] == '-':
-            total -= float(values[i+1])
-        if values[i] == 'x':
-            total *= float(values[i+1])
-        if values[i] == '/':
-            total /= float(values[i+1])
-
+    try:
+        for i in xrange(1, length, 2):
+            if values[i] == '+':
+                total += float(values[i+1])
+            elif values[i] == '-':
+                total -= float(values[i+1])
+            elif values[i] == 'x':
+                total *= float(values[i+1])
+            elif values[i] == '/':
+                total /= float(values[i+1])
+    except ValueError:
+        pass
+    print(total)
     try:
         if total.is_integer():
             entry.insert(END, int(total))
         else:
             entry.insert(END, total)
     except AttributeError:
-        pass
-
+        entry.insert(END, 0)
     del values[:]
-
-#def store_to_total(values=[]):
-    #entry.delete(0, END)
-    #for i in enumerate(values):
-    #    if not i.isalpha():
-    #        values = map(str, values)
-    #    else:
-    #        values = map(float, values)
-        #print(i)
-
-
-
-#total = Label(root, width=10, height=8, bg="red")
-#total.config(font=("Courier", 18))
 
 
 #Creating buttons in GUI
@@ -111,13 +79,13 @@ button0 = Button(text="0", width=3, height=4, command=lambda: entry.insert(END,0
 
 button_dot = Button(text=".", width = 3, height=4, command=lambda: entry.insert(END, '.'))
 
-button_plus = Button(text="+", width=3, height=4, command=lambda: sum(entry.get()))
+button_plus = Button(text="+", width=3, height=4, command=lambda: operator(entry.get(), '+'))
 
-button_minus = Button(text="-", width=3, height=4, command=lambda: subtract(entry.get()))
+button_minus = Button(text="-", width=3, height=4, command=lambda: operator(entry.get(), '-'))
 
-button_divide = Button(text='/', width=3, height=4, command=lambda: divide(entry.get()))
+button_divide = Button(text='/', width=3, height=4, command=lambda: operator(entry.get(), '/'))
 
-button_multiplication = Button(text='X', width=3, height=4, command=lambda: multiply(entry.get()))
+button_multiplication = Button(text='X', width=3, height=4, command=lambda: operator(entry.get(), 'x'))
 
 button_equals = Button(text="=", width=3, height=4, command=lambda: store_to_total())
 
@@ -146,10 +114,6 @@ button_multiplication.grid(row=2, column=3, sticky="nsew", pady=1)
 button_minus.grid(row=3, column=3, sticky="nsew", pady=1)
 button_plus.grid(row=4, column=3, sticky="nsew", pady=1)
 button_equals.grid(row=5, column=3, sticky="nsew", pady=1)
-
-#total.grid(row=0, stick="ew", columnspan=3)
-
-#Giving a set size for each row/column
 
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
