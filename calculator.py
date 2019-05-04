@@ -9,28 +9,39 @@ values = []
 entry = Entry(root, width=10)
 entry.config(font=("Courier", 18))
 
+label = Label(root, width=10)
+label.config(font=("Courier", 15))
+
+
+def show_numbers():
+    if len(values) < 2:
+        pass
+    else:
+        for i in xrange(0, len(values), 1):
+            label.config(text=values)
+
 
 def clear():
     entry.delete(0, END)
-    del values[:]
+    del values[:]           #deletes all values in list
 
 
 def operator(num, op):
-    values.extend((num, op))
+    values.extend((num, op))     #works like append, but inserts more than 1 thing into the list
     entry.delete(0, END)
+    show_numbers()
 
 
 def store_to_total():
     num = entry.get()
     values.append(num)
     entry.delete(0, END)
-    global total
+    length = len(values)
 
     try:
         total = float(values[0])
     except ValueError:
         total = 0
-    length = len(values)
 
     try:
         for i in xrange(1, length, 2):
@@ -44,14 +55,17 @@ def store_to_total():
                 total /= float(values[i+1])
     except ValueError:
         pass
-    print(total)
+
     try:
         if total.is_integer():
             entry.insert(END, int(total))
+            label.config(text='= '+str(int(total)))
         else:
             entry.insert(END, total)
+            label.config(text='= '+str(total))
     except AttributeError:
         entry.insert(END, 0)
+
     del values[:]
 
 
@@ -95,6 +109,7 @@ button_clear_line = Button(text="Clear Line", width=3, height=4, command=lambda:
 
 #Formatting Button Layout in APP
 
+label.grid(row=0, columnspan=4, stick="new")
 entry.grid(row=0, stick="nsew", columnspan=6)
 button_clear_entry.grid(row=1, column=1, columnspan=2, sticky="nsew", pady=1)
 button_clear_line.grid(row=1, column=0, sticky="nsew", pady=1)
