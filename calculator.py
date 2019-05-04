@@ -44,11 +44,14 @@ def store_to_total():
     values.append(num)
     entry.delete(0, END)
     global total
+
     try:
         total = float(values[0])
     except ValueError:
         total = 0
     length = len(values)
+
+
     for i in xrange(1, length, 2):
         if values[i] == '+':
             total += float(values[i+1])
@@ -58,7 +61,15 @@ def store_to_total():
             total *= float(values[i+1])
         if values[i] == '/':
             total /= float(values[i+1])
-    entry.insert(END, total)
+
+    try:
+        if total.is_integer():
+            entry.insert(END, int(total))
+        else:
+            entry.insert(END, total)
+    except AttributeError:
+        pass
+
     del values[:]
 
 #def store_to_total(values=[]):
@@ -112,11 +123,13 @@ button_equals = Button(text="=", width=3, height=4, command=lambda: store_to_tot
 
 button_clear_entry = Button(text="Clear All", width=3, height=4, command=lambda: clear())
 
+button_clear_line = Button(text="Clear Line", width=3, height=4, command=lambda: entry.delete(0, END))
+
 #Formatting Button Layout in APP
 
 entry.grid(row=0, stick="nsew", columnspan=6)
-
-button_clear_entry.grid(row=1, columnspan=3, sticky="nsew")
+button_clear_entry.grid(row=1, column=1, columnspan=2, sticky="nsew", pady=1)
+button_clear_line.grid(row=1, column=0, sticky="nsew", pady=1)
 button1.grid(row=2, column=0, sticky="nsew", pady=1)
 button2.grid(row=2, column=1, sticky="nsew", pady=1)
 button3.grid(row=2, column=2, sticky="nsew", pady=1)
