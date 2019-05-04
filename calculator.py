@@ -13,12 +13,10 @@ label = Label(root, width=10)
 label.config(font=("Courier", 15))
 
 
-def show_numbers(): #Shows values list on label
-    if len(values) < 2:     #if the length of the list is less than 2, don't add anything to the label
-        pass
-    else:
-        for i in xrange(0, len(values), 1):
-            label.config(text=values)
+def show_numbers():     #Shows values list on label
+    print(len(values))
+    for i in xrange(0, len(values)):
+        label.config(text=values)
 
 
 def clear():
@@ -27,6 +25,8 @@ def clear():
 
 
 def operator(num, op):
+    if num == '':
+        num = '0'
     values.extend((num, op))     #works like append, but inserts more than 1 thing into the list
     entry.delete(0, END)
     show_numbers()
@@ -106,6 +106,7 @@ button_equals = Button(text="=", width=3, height=4, command=lambda: store_to_tot
 button_clear_entry = Button(text="Clear All", width=3, height=4, command=lambda: clear())
 
 button_clear_line = Button(text="Clear Line", width=3, height=4, command=lambda: entry.delete(0, END))
+
 
 #Formatting Button Layout in APP
 
