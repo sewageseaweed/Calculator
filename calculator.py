@@ -13,8 +13,8 @@ label = Label(root, width=10)
 label.config(font=("Courier", 15))
 
 
-def show_numbers():
-    if len(values) < 2:
+def show_numbers(): #Shows values list on label
+    if len(values) < 2:     #if the length of the list is less than 2, don't add anything to the label
         pass
     else:
         for i in xrange(0, len(values), 1):
