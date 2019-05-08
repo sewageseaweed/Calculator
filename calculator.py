@@ -14,7 +14,6 @@ label.config(font=("Courier", 15))
 
 
 def show_numbers():     #Shows values list on label
-    print(len(values))
     for i in xrange(0, len(values)):
         label.config(text=values)
 
@@ -53,6 +52,13 @@ def store_to_total():
                 total *= float(values[i+1])
             elif values[i] == '/':
                 total /= float(values[i+1])
+            elif values[i] == '%':
+                total *= float(values[i+1])/100
+            elif values[i] == '+%':
+                total *= ((float(values[i+1])/100)+1)
+            elif values[i] == '-%':
+                percent = total*(float(values[i+1])/100)
+                total -= percent
     except ValueError:
         pass
 
@@ -107,10 +113,16 @@ button_clear_entry = Button(text="Clear All", width=3, height=4, command=lambda:
 
 button_clear_line = Button(text="Clear Line", width=3, height=4, command=lambda: entry.delete(0, END))
 
+button_sales_tax = Button(text="Sales Tax", width=3, height=4, command=lambda: operator(entry.get(), '+%'))
+
+button_discount = Button(text="Discount", width=3, height=4, command=lambda: operator(entry.get(), '-%'))
+
+button_percent = Button(text = "%", width=3, height=4, command=lambda: operator(entry.get(), '%'))
+
 
 #Formatting Button Layout in APP
 
-label.grid(row=0, columnspan=4, stick="new")
+label.grid(row=0, columnspan=5, stick="new")
 entry.grid(row=0, stick="nsew", columnspan=6)
 button_clear_entry.grid(row=1, column=1, columnspan=2, sticky="nsew", pady=1)
 button_clear_line.grid(row=1, column=0, sticky="nsew", pady=1)
@@ -125,16 +137,21 @@ button8.grid(row=4, column=1, sticky="nsew", pady=1)
 button9.grid(row=4, column=2, sticky="nsew", pady=1)
 button0.grid(row=5, columnspan=2, sticky="nsew", pady=1)
 button_dot.grid(row=5, column=2, sticky="nsew", pady=1)
-button_divide.grid(row=1, column=3, sticky="nsew", pady=1)
-button_multiplication.grid(row=2, column=3, sticky="nsew", pady=1)
-button_minus.grid(row=3, column=3, sticky="nsew", pady=1)
-button_plus.grid(row=4, column=3, sticky="nsew", pady=1)
-button_equals.grid(row=5, column=3, sticky="nsew", pady=1)
+button_sales_tax.grid(row=2, rowspan=2, column=3, sticky="nsew", pady=1)
+button_discount.grid(row=4, rowspan=2, column=3, sticky="nsew", pady=1)
+button_percent.grid(row=1, column=3, sticky="nsew", pady=1)
+button_divide.grid(row=1, column=4, sticky="nsew", pady=1)
+button_multiplication.grid(row=2, column=4, sticky="nsew", pady=1)
+button_minus.grid(row=3, column=4, sticky="nsew", pady=1)
+button_plus.grid(row=4, column=4, sticky="nsew", pady=1)
+button_equals.grid(row=5, column=4, sticky="nsew", pady=1)
+
 
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
 root.columnconfigure(2, weight=1)
 root.columnconfigure(3, weight=1)
+root.columnconfigure(4, weight=1)
 root.rowconfigure(0, weight=2)
 root.rowconfigure(1, weight=1)
 root.rowconfigure(2, weight=1)
